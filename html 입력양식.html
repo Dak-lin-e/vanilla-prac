@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <title>입력양식</title>
+</head>
+<body>
+    <h2>입력데이터 종류들</h2>
+    <form action:"input.jsp" method="post"> <!--action은 입력을 처리하는 서버스크립트의주소, 
+        method는 입력데이터가 서버로 보내지는 방법을 기술--> 
+        아이디:<input type="text" name="input" /><br>
+        비밀번호:<input type="password" size="15" value=""><br>
+        이메일:<input type="email" name="email" required /><br /> <!--required는 이메일이 유효한지 검증-->>
+        색상 :<input type="color" name="color" /><br />
+        날짜 :<input type="date" name="date" /><br />
+        범위 :<input type="range" name="range" min="1" max="10" step="2" /><br />
+    <input type="submit" value="제출">
+    
+    </form>
+
+
+    <h2>고객의 소리</h2>
+    <form name="input" action="getfeedback.jsp" method="post">
+아이디:<input type="text" name="name"><br>
+구매번호:<input type="text" name="number" size="10"><br>
+패스워드:<input type="password" name="password"><br>
+<input type="submit" value="제출">
+<input type="reset" value="초기화"><br>
+제품을 평가해주세요.<br />
+<textarea name="feedback" rows="5" cols="50">
+
+</textarea>
+
+    </form>
+
+    <h2>선호도조사
+    </h2>
+
+<form>
+성별:
+<input type="radio" name="gender" value="male">남성
+<input type="radio" name="gender" value="femlae">여성<br>
+
+과일선택:
+<input type="checkbox" name="fruits" value="apple" checked> 사과
+<input type="checkbox" name="fruits" value="banana">바나나
+<input type="checkbox" name="fruits" value="kiwi">키위
+
+</form action="process.jsp">
+<h2>여러가지 요소들</h2>
+<form><!--onclick은 "버튼이 클릭이되면" 이라는 의미-->
+<input type="button" value="눌러봐" onclick="alert('안녕?')"> <br>
+<input type="button"><img src="현성과 나.jpg"></button> <br />
+
+<!--select 요소-->
+<select name="cars">
+    <option value="bmw">BMW</option>
+    <option value="KIA">KIA</option>
+    <option value="BENZ" selected>BENZ</option>
+</select>
+
+<!--datalist 요소-->
+<p>선호하는 브라우저를 선택해주세요</p>
+<fieldset>
+    <legend>선택사항</legend>
+    <input list="browsers" name="browsers">
+    <datalist id="browsers"> <!--datalist의 id 와 위의 input list의 id가 일치해야하함함-->
+        <option value="구글크롬">
+        <option value="엣지">
+        <option value="사파리">
+        <option value="파이어폭스">
+
+    </datalist>
+    <input type="submit"> <br>
+</fieldset>
+</form>
+
+<!--파일업로드 버튼 생성, enctype 은 파일을 올바르게 업로드하게함. 
+accept 속성은 업로드 시킬파일의 mime타입을 브라우저에게 알려줌. type=file을 하면 파일선택 화면이 등장장-->
+<form enctype="multipart/form-data">
+    <input type="file" accept="image/jpg,image/gif">
+
+</form>
+
+</body>
+</html>

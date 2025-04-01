@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>google_Clone</title>
+    <style>
+        span{
+            position: absolute;
+            right: 10px;
+            font-size: 20px;
+        }
+        img{
+            margin: auto;
+            width: 200px;
+            height: 100px;
+            top: 50%;
+        }
+        form{
+            text-align: center;
+        }
+        input[type="text"]{
+            width: 50%;
+            height: 40px;
+            margin: 10px;
+            border: 1px solid black;
+            border-radius: 20px;
+            top: 55%;
+            background-color: transparent;
+            background-image: url('https://cdn-icons-png.flaticon.com/512/71/71403.png'),url('https://img.freepik.com/free-vector/keyboard-realistic_78370-506.jpg'),url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy1Zhmrt_Fh0eCLF5rhk47SIvm3fapFpym2A&s"),url("https://cdn-icons-png.flaticon.com/512/5218/5218413.png");
+            padding-left: 40px; 
+            background-size: 20px,30px,30px,30px;
+            background-repeat: no-repeat,no-repeat,no-repeat,no-repeat;
+            background-position: 1% 50% , 90% 50%, 95% 50%,99% 50%;
+        }
+        input[type="submit"]{
+            width: 100px;
+            height: 30px;
+            margin: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+            top: 55%;
+            font-size: 12px;
+            font-display: bold;
+        }
+        .medium{
+            position: relative;
+            top: 150px;
+            margin: 10px;
+        }
+        
+    </style>
+
+
+</head>
+<body>
+        <span><a href="https://mail.google.com/mail/u/0/#inbox">Gmail</a>
+        이미지</span>
+
+    <div class="medium">
+    <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="google_logo" style="display: block; margin: auto; width: 200px; height: 100px;">
+    <form action="https://www.google.com/search" method="get">
+        <input type="text" name="q" size="50" placeholder="검색어를 입력하세요" /></br>
+        <input type="submit" value="Google 검색"  />
+        <input type="submit" value="I'm feeling Lucky" />
+    </form>
+    </div>
+</body>
+</html>
