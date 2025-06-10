@@ -1,176 +1,255 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Todos 앱</title>
-  <style>
-    body {
-      background-color: #ec6f7c;
-      font-family: 'Arial', sans-serif;
-      color: white;
-      margin: 0;
-      padding: 2rem;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <Style>
+        * {margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+        button{
+            background: none;
+            outline: none;
+            border: none;
+            cursor: pointer;
+        }
+        body{
+            background-color: lightcoral;
+            color:#fff;
 
-    .container {
-      max-width: 500px;
-      margin: 0 auto;
-    }
+        }
+        main{
+            min-height:100vh;
+            display:flex;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+        }
+        .app{
+            width:100%;
+            max-width: 768px;   
+        }
+        .app header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .app header h1{
+            font-size: 2rem;
+            font-weight: 400;
+            color:#fff
+        }
+        .app header button{
+            padding: 0.5rem 1rem;
+            background-color: #fff;
+            color: lightcoral;
+            border-radius: 0.25rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
+        .item{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background-color:lightblue;
+            color: lightcoral;
+            border-radius: 1rem;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .item:last-of-type{
+            margin-bottom: 0;
+        }
+        .item input[type="checkbox"]{
+            margin-right: 1rem;
+        }
 
-    .header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
+        .item input[type="text"]{
+            border-radius: 0.25rem;
+            border: none;
+            background: none;
+            border: none;
+            outline: none;
+            color: black;
+            flex:1 1 0%;
+            margin-right: 1rem;
+            appearance: none;
+            font-weight: 400;
+        }
+        .item input[type="text"]:not(:disabled){
+            border-bottom: 2px solid #fff;
+        }
+        .item.complete{
+            opacity: 0.7;
+        }
+        .item.complete input[type="text"]{
+            text-decoration: line-through;
+         }
+         .item:hover,
+         .item:focus-within{
+            outline: 2px solid #fff;
+         }
+         .actions button{
+            color: crimson;
+            margin-right: 1rem;
+            opacity: 0.8;
+            transform: 0.1s;
+         }
+         .actions button.remove-btn{
+            color: crimson;
+         }
+         .actions button:hover{
+            opacity: 1;
+         }
+         .actions button:last-of-type{
+            margin-right: 0;
+         }
+    </Style>
 
-    .header a {
-      color: white;
-      text-decoration: underline;
-      font-size: 1rem;
-      cursor: pointer;
-    }
-
-    .todo-item {
-      background-color: #add8e6;
-      border-radius: 12px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: black;
-    }
-
-    .todo-item.completed {
-      background-color: #bfbfc6;
-      text-decoration: line-through;
-      color: #333;
-    }
-
-    .left {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .actions {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .actions button {
-      background: none;
-      border: none;
-      color: red;
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    .actions button.edit {
-      color: #333;
-    }
-
-    .todo-input {
-      background-color: white;
-      color: black;
-      border-radius: 8px;
-      padding: 0.5rem;
-      width: 100%;
-      margin-bottom: 1rem;
-      border: none;
-    }
-  </style>
+    <link rel ="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>Todos 앱</h1>
-      <a onclick="addTodoInput()">새로운 TODO 추가하기</a>
+    <div class="app">
+        <header>
+            <h1>Todo List</h1>
+            <button id="create-btn">새로운 todo 추가</button>
+        </header>
+        <div class="todo-list" id="list">
+            <div class="item">
+                <input type="checkbox"/>
+                <input type="text" value="todo 내용" disabled/>
+                <div class="actions">
+                    <button class="material-icons">edit</button>
+                    <button class="material-icons remove-btn">remove_circle</button>
+                </div>
+
+            </div>
+
+        </div>
     </div>
+    <script>
+        const list = document.getElementById('list');
+        const createBtn = document.getElementById('create-btn');
 
-    <input id="todo-input" class="todo-input" placeholder="새로운 TODO를 입력하세요" style="display:none" />
-    <div id="todo-list">
-      <div class="todo-item completed">
-        <div class="left">
-          <input type="checkbox" checked onchange="toggleComplete(this)">
-          <span contenteditable="true">운동하기</span>
-        </div>
-        <div class="actions">
-          <button class="edit" onclick="editTodo(this)">✏️</button>
-          <button onclick="deleteTodo(this)">➖</button>
-        </div>
-      </div>
+        let todos=[];
 
-      <div class="todo-item">
-        <div class="left">
-          <input type="checkbox" onchange="toggleComplete(this)">
-          <span contenteditable="true">밥먹기</span>
-        </div>
-        <div class="actions">
-          <button class="edit" onclick="editTodo(this)">✏️</button>
-          <button onclick="deleteTodo(this)">➖</button>
-        </div>
-      </div>
-    </div>
-  </div>
+        createBtn.addEventListener('click',CreateNewTodo);
 
-  <script>
-    function toggleComplete(checkbox) {
-      const item = checkbox.closest('.todo-item');
-      item.classList.toggle('completed');
-    }
+        function CreateNewTodo(){
+            //새로운 아이템객체 생성
+            const item = {
+                id:new Date().getTime(),
+                text:'',
+                complete:false
+            }
+            //배열에 아이템 투입
+            todos.unshift(item);
 
-    function deleteTodo(button) {
-      const item = button.closest('.todo-item');
-      item.remove();
-    }
+            const{itemEl, inputEl, editBtnEl, removeBtnEl} = createTodoElement(item);
 
-    function addTodoInput() {
-      const input = document.getElementById('todo-input');
-      input.style.display = 'block';
-      input.focus();
-      input.addEventListener('keypress', function(event) {
-        if (event.key === 'Enter' && input.value.trim() !== '') {
-          addTodoItem(input.value);
-          input.value = ''; // Clear the input field
-          input.style.display = 'none'; // Hide the input field
+            list.prepend(itemEl);
+
+            inputEl.removeAttribute('disabled');
+            inputEl.focus();
+
+            savetoLocalStorage();
         }
-      });
-    }
 
-    function addTodoItem(text) {
-      const todoList = document.getElementById('todo-list');
-      const div = document.createElement('div');
-      div.className = 'todo-item';
-      div.innerHTML = `
-        <div class="left">
-          <input type="checkbox" onchange="toggleComplete(this)">
-          <span contenteditable="true">${text}</span>
-        </div>
-        <div class="actions">
-          <button class="edit" onclick="editTodo(this)">✏️</button>
-          <button onclick="deleteTodo(this)">➖</button>
-        </div>
-      `;
-      todoList.appendChild(div);
-    }
+        function createTodoElement(item){
+            const itemEl = document.createElement('div');
+            itemEl.classList.add('item');
 
-    function editTodo(button) {
-      const item = button.closest('.todo-item');
-      const textElement = item.querySelector('span');
-      textElement.setAttribute('contenteditable', true);
-      textElement.focus();
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = item.complete;
 
-      textElement.addEventListener('blur', function() {
-        textElement.setAttribute('contenteditable', false);
-      });
-    }
-  </script>
+            if(item.complete){
+                itemEl.classList.add('complete');
+            }
+
+            const inputEl = document.createElement('input');
+            inputEl.type = 'text';
+            inputEl.value = item.text;
+            inputEl.disabled = true;
+
+            const actionsEl = document.createElement('div');
+            actionsEl.classList.add('actions');
+
+            const editBtnEl = document.createElement('button');
+            editBtnEl.classList.add('material-icons');
+            editBtnEl.textContent = 'edit';
+
+            const removeBtnEl = document.createElement('button');
+            removeBtnEl.classList.add('material-icons', 'remove-btn');
+            removeBtnEl.textContent = 'remove_circle';
+
+            checkbox.addEventListener('change', () => {
+                item.complete = checkbox.checked;
+                if(item.complete){
+                    itemEl.classList.add('complete');
+                } else {
+                    itemEl.classList.remove('complete');
+                }
+                savetoLocalStorage();
+            });
+
+            inputEl.addEventListener('input', () => {
+                item.text = inputEl.value;
+                
+            });
+
+            inputEl.addEventListener('blur', () => {
+                inputEl.setAttribute('disabled', '');
+                savetoLocalStorage();
+            });
+
+            editBtnEl.addEventListener('click', () => {
+                inputEl.removeAttribute('disabled');
+                inputEl.focus();
+            });
+
+            removeBtnEl.addEventListener('click', () => {
+                todos = todos.filter(t => t.id !== item.id);
+                itemEl.remove();
+                savetoLocalStorage();
+            });
+
+            actionsEl.appendChild(editBtnEl);
+            actionsEl.appendChild(removeBtnEl);
+
+            itemEl.appendChild(checkbox);
+            itemEl.appendChild(inputEl);
+            itemEl.appendChild(actionsEl);
+
+            return{itemEl, inputEl, editBtnEl, removeBtnEl};
+        }
+
+        function savetoLocalStorage(){
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        function loadFromLocalStorage(){
+            const todosData = localStorage.getItem('todos');
+            if(todosData){
+                todos = JSON.parse(todosData);
+             
+            }
+        }
+
+        function displayTodos(){
+        loadFromLocalStorage();
+        for(let i=0; i<todos.length; i++){
+            const item = todos[i];
+            const {itemEl} = createTodoElement(item);
+            list.appendChild(itemEl);
+        }}
+
+        displayTodos();
+        // 페이지가 로드될 때 로컬 스토리지에서 todos를 불러옵니다.
+    </script>
 </body>
 </html>
