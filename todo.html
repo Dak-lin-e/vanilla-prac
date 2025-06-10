@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Todos 앱</title>
+  <style>
+    body {
+      background-color: #ec6f7c;
+      font-family: 'Arial', sans-serif;
+      color: white;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .header a {
+      color: white;
+      text-decoration: underline;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .todo-item {
+      background-color: #add8e6;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: black;
+    }
+
+    .todo-item.completed {
+      background-color: #bfbfc6;
+      text-decoration: line-through;
+      color: #333;
+    }
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .actions button {
+      background: none;
+      border: none;
+      color: red;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .actions button.edit {
+      color: #333;
+    }
+
+    .todo-input {
+      background-color: white;
+      color: black;
+      border-radius: 8px;
+      padding: 0.5rem;
+      width: 100%;
+      margin-bottom: 1rem;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Todos 앱</h1>
+      <a onclick="addTodoInput()">새로운 TODO 추가하기</a>
+    </div>
+
+    <input id="todo-input" class="todo-input" placeholder="새로운 TODO를 입력하세요" style="display:none" />
+    <div id="todo-list">
+      <div class="todo-item completed">
+        <div class="left">
+          <input type="checkbox" checked onchange="toggleComplete(this)">
+          <span contenteditable="true">운동하기</span>
+        </div>
+        <div class="actions">
+          <button class="edit" onclick="editTodo(this)">✏️</button>
+          <button onclick="deleteTodo(this)">➖</button>
+        </div>
+      </div>
+
+      <div class="todo-item">
+        <div class="left">
+          <input type="checkbox" onchange="toggleComplete(this)">
+          <span contenteditable="true">밥먹기</span>
+        </div>
+        <div class="actions">
+          <button class="edit" onclick="editTodo(this)">✏️</button>
+          <button onclick="deleteTodo(this)">➖</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleComplete(checkbox) {
+      const item = checkbox.closest('.todo-item');
+      item.classList.toggle('completed');
+    }
+
+    function deleteTodo(button) {
+      const item = button.closest('.todo-item');
+      item.remove();
+    }
+
+    function addTodoInput() {
+      const input = document.getElementById('todo-input');
+      input.style.display = 'block';
+      input.focus();
+      input.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter' && input.value.trim() !== '') {
+          addTodoItem(input.value);
+          input.value = ''; // Clear the input field
+          input.style.display = 'none'; // Hide the input field
+        }
+      });
+    }
+
+    function addTodoItem(text) {
+      const todoList = document.getElementById('todo-list');
+      const div = document.createElement('div');
+      div.className = 'todo-item';
+      div.innerHTML = `
+        <div class="left">
+          <input type="checkbox" onchange="toggleComplete(this)">
+          <span contenteditable="true">${text}</span>
+        </div>
+        <div class="actions">
+          <button class="edit" onclick="editTodo(this)">✏️</button>
+          <button onclick="deleteTodo(this)">➖</button>
+        </div>
+      `;
+      todoList.appendChild(div);
+    }
+
+    function editTodo(button) {
+      const item = button.closest('.todo-item');
+      const textElement = item.querySelector('span');
+      textElement.setAttribute('contenteditable', true);
+      textElement.focus();
+
+      textElement.addEventListener('blur', function() {
+        textElement.setAttribute('contenteditable', false);
+      });
+    }
+  </script>
+</body>
+</html>
